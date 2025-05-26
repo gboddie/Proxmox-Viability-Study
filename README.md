@@ -2,7 +2,7 @@
 
 As part of this project, I conducted an in-depth exploration of Proxmox Virtual Environment (VE) to assess its suitability for deploying and managing virtual machines in a scalable, efficient manner. Key achievements include:
 
-Configured Proxmox to deploy Ubuntu, Red Hat, and Windows Server VMs using Terraform, integrating static and DHCP IP management strategies.
+Configured Proxmox to deploy Ubuntu, Red Hat, Windows 11, and Windows Server VMs using Terraform.
 
 Automated VM provisioning with pre-installed local databases (MySQL and MSSQL), enabling self-contained environments tailored to class-specific requirements.
 

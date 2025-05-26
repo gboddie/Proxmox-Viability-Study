@@ -2,7 +2,7 @@
 
 This project explores the potential of Proxmox Virtual Environment as a robust platform for deploying and managing virtual machines (VMs) in scalable and automated workflows. The study involved integrating Proxmox with modern infrastructure automation tools to streamline VM provisioning and configuration.
 
-Key Achievements
+## Key Achievements
 Proxmox Configuration with Terraform
 
 Deployed and managed Ubuntu, Red Hat, Windows 11, and Windows Server VMs.
@@ -25,14 +25,14 @@ Enhanced Automation Workflows
 
 Combined Terraform, Packer, and Ansible for an end-to-end infrastructure automation pipeline.
 
-Insights and Outcomes
+## Insights and Outcomes
 Scalability and Efficiency: Showcased Proxmox’s capabilities in managing multiple VM types with varying configurations.
 
 Automation-Driven Workflows: Highlighted the synergy between Proxmox and automation tools for reducing setup time and errors.
 
 Flexibility: Enabled tailored environments for specific use cases, including education and development.
 
-Repository Structure
+## Repository Structure
 
 /terraform: Terraform configurations for VM provisioning.
 

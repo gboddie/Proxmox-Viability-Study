@@ -33,6 +33,7 @@ Automation-Driven Workflows: Highlighted the synergy between Proxmox and automat
 Flexibility: Enabled tailored environments for specific use cases, including education and development.
 
 Repository Structure
+
 /terraform: Terraform configurations for VM provisioning.
 
 /packer: Packer templates for creating golden images.

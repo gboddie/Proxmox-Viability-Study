@@ -1,0 +1,54 @@
+resource "proxmox_vm_qemu" "redhat_clones" {
+  for_each = tomap({
+    for i in range(1, var.clone_count + 1) :
+    "redhat-${i}" => {
+      vmid = var.templates.redhat.vmid + i
+      name = "redhat-clone-${i}"
+    }
+  })
+
+  vmid        = each.value.vmid
+  name        = each.value.name
+  target_node = "pve1"
+  clone       = var.templates.redhat.name
+  full_clone  = true
+  bios        = "seabios"
+  agent       = 1
+  cores       = 1
+  memory      = 2048
+  os_type     = "cloud-init"
+  vm_state    = "stopped"
+  scsihw      = "virtio-scsi-single"
+
+  disks {
+    ide {
+      ide0 {
+        cloudinit {
+          storage = "local-lvm"
+        }
+      }
+    }
+
+    scsi {
+      scsi0 {
+        disk {
+          size      = 16
+          cache     = "writeback"
+          storage   = "local-lvm"
+          discard   = true
+          iothread  = true
+        }
+      }
+    }
+  }
+
+  network {
+    id      = 0
+    model   = "virtio"
+    bridge  = "vmbr0"
+  }
+
+  ipconfig0 = "ip=dhcp"
+}
+
+

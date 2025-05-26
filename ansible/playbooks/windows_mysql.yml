@@ -1,0 +1,31 @@
+- name: Push and run SQL update script on SQL Server
+  hosts: windows
+  gather_facts: false
+  vars:
+    sql_server_host: "WIN-AK3A1B9655A" 
+    sql_server_database: Ansible  # Using the existing 'Ansible' database
+    sql_server_user: ansible_user
+    sql_server_password: P@SSWORD!1234
+    sql_script_path: C:\temp\setup_windows.sql
+
+  tasks:
+    - name: Ensure C:\temp directory exists
+      ansible.windows.win_file:
+        path: C:\temp
+        state: directory
+
+    - name: Copy SQL update script to Windows VM
+      ansible.windows.win_copy:
+        src: /home/user1/my_ansible_project/scripts/setup_windows.sql
+        dest: "{{ sql_script_path }}"
+
+    - name: Execute SQL script via sqlcmd
+      ansible.windows.win_shell: |
+        sqlcmd -S "{{ sql_server_host }}" -d "{{ sql_server_database }}" -U "{{ sql_server_user }}" -P "{{ sql_server_password }}" -i "{{ sql_script_path }}"
+      register: sql_output
+      environment:
+        SQLCMDPASSWORD: "{{ sql_server_password }}"
+
+    - name: Display SQL execution result
+      ansible.builtin.debug:
+        var: sql_output

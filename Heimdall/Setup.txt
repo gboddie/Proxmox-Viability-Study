@@ -1,0 +1,55 @@
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git curl unzip php-cli php-mbstring php-xml php-bcmath php-curl php-zip composer php-sqlite3 php-fpm
+sudo mkdir -p /var/www
+cd /var/www
+sudo git clone https://github.com/linuxserver/Heimdall.git heimdall
+sudo chown -R www-data:www-data /var/www/heimdall
+sudo chmod -R 755 /var/www/heimdall
+cd /var/www/heimdall
+composer install
+sudo chown -R www-data:www-data /var/www/heimdall/storage /var/www/heimdall/bootstrap/cache
+sudo chmod -R 775 /var/www/heimdall/storage /var/www/heimdall/bootstrap/cache
+
+Log permission issue:
+sudo rm -rf /var/www/heimdall/storage/logs/*
+sudo touch /var/www/heimdall/storage/logs/laravel.log
+sudo chmod 775 /var/www/heimdall/storage/logs/laravel.log
+sudo chown -R www-data:www-data /var/www/heimdall/storage/logs
+
+Manually test Heimdall:
+php artisan serve --host=0.0.0.0 --port=8080
+
+Create the service file:
+sudo vi /etc/systemd/system/heimdall.service
+
+*********************************************************
+[Unit]
+Description=Heimdall Application
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/heimdall
+ExecStart=/usr/bin/php artisan serve --host=0.0.0.0 --port=8080
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+**********************************************************
+
+Enable and start service:
+sudo systemctl daemon-reload
+sudo systemctl enable heimdall
+sudo systemctl start heimdall
+sudo systemctl status heimdall
+
+Open firewall port:
+sudo ufw allow 8080
+
+Verifty install:
+sudo systemctl status heimdall
+
+Check access http://<server-ip>:8080
+
+

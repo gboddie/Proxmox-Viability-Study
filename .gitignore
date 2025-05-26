@@ -1,1 +1,2 @@
-./terraform/credentials.auto.tfvars
+terraform/credentials.auto.tfvars
+packer/credentials.pkrvars.hcl
